@@ -4,12 +4,16 @@ import 'package:http/http.dart' as http;
 import '../api/product_api.dart';
 
 class APIService {
-  Future<List<ProductModel>> fetchAPIData() async {
-    var response = await http.get(Uri.parse(productAPI));
-    if (response.statusCode == 200) {
-      return productModelFromJson(response.body);
-    } else {
-      return [];
+  Future fetchAPIData() async {
+    try {
+      var response = await http.get(Uri.parse(productAPI));
+      if (response.statusCode == 200) {
+        return productModelFromJson(response.body);
+      } else {
+        return [];
+      }
+    } on Exception catch (e) {
+      print(e);
     }
   }
 }
